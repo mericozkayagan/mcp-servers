@@ -115,7 +115,10 @@ Edit your Cursor AI MCP configuration file at `~/.cursor/mcp.json`:
   "mcpServers": {
     "postgresql-mcp": {
       "command": "node",
-      "args": ["/path/to/mcp-servers/postgresql-mcp/build/index.js"]
+      "args": ["/path/to/mcp-servers/postgresql-mcp/build/index.js"],
+      "env": {
+        "PG_DB_MAP": "{\"db1\":\"postgresql://username:password@hostname:5432/database_name?sslmode=require\",\"analytics\":\"postgresql://analytics_user:secure_password@analytics-db.example.com:5432/analytics?sslmode=require\",\"default\":\"db1\"}"
+      }
     },
     "mcp-obsidian": {
       "command": "/path/to/python/bin/mcp-obsidian",
@@ -128,7 +131,7 @@ Edit your Cursor AI MCP configuration file at `~/.cursor/mcp.json`:
 }
 ```
 
-Replace paths and API key with your actual values.
+Replace paths, database connection details, and API key with your actual values. The `PG_DB_MAP` environment variable lets you configure multiple database connections and reference them by name.
 
 ## Debugging
 

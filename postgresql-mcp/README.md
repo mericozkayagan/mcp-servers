@@ -212,6 +212,37 @@ Real-time monitoring of PostgreSQL database:
 }
 ```
 
+## Environment Configuration
+
+You can configure database connections using environment variables:
+
+### Using PG_DB_MAP
+
+Set the `PG_DB_MAP` environment variable with a JSON string containing your database connections:
+
+```json
+{
+  "db1": "postgresql://username:password@hostname:5432/database_name?sslmode=require",
+  "analytics": "postgresql://analytics_user:secure_password@analytics-db.example.com:5432/analytics?sslmode=require",
+  "reporting": "postgresql://reporting_user:another_password@reporting-db.example.com:5432/reports",
+  "default": "db1"
+}
+```
+
+When adding to your mcp.json:
+
+```json
+"env": {
+  "PG_DB_MAP": "{\"db1\":\"postgresql://username:password@hostname:5432/database_name?sslmode=require\",\"analytics\":\"postgresql://analytics_user:secure_password@analytics-db.example.com:5432/analytics?sslmode=require\",\"reporting\":\"postgresql://reporting_user:another_password@reporting-db.example.com:5432/reports\",\"default\":\"db1\"}"
+}
+```
+
+This allows you to:
+
+1. Reference connections by name in your requests (e.g., `"connectionString": "db1"`)
+2. Set a default connection to use when no connection is specified
+3. Keep sensitive connection details out of your code
+
 ## Prerequisites
 
 - Node.js >= 18.0.0
@@ -229,50 +260,19 @@ Real-time monitoring of PostgreSQL database:
    ```bash
    npm run build
    ```
-4. Add to MCP settings file (~/.cursor/mcp.json):
+4. Add to MCP settings file:
    ```json
    {
      "mcpServers": {
        "postgresql-mcp": {
          "command": "node",
          "args": ["/path/to/postgresql-mcp-server/build/index.js"],
-         "env": {
-           "PG_DB_MAP": "{\"db1\":\"postgresql://user1:password1@localhost:5432/database1\",\"db2\":\"postgresql://user2:password2@remote-server.example.com:5432/database2\",\"default\":\"db1\"}"
-         }
+         "disabled": false,
+         "alwaysAllow": []
        }
      }
    }
    ```
-
-### Configuration Details
-
-The `PG_DB_MAP` environment variable is a JSON string that defines your database connections:
-
-```json
-{
-  "db1": "postgresql://user1:password1@localhost:5432/database1",
-  "db2": "postgresql://user2:password2@remote-server.example.com:5432/database2",
-  "default": "db1"
-}
-```
-
-Structure:
-
-- Each key-value pair defines a named connection (except "default")
-- Connection names are used when executing commands (e.g., `"connectionString": "db1"`)
-- The "default" key specifies which connection to use when none is provided
-- You can configure any number of database connections
-
-Example with multiple production databases:
-
-```json
-{
-  "analytics": "postgresql://analytics_user:pass@analytics-db.example.com:5432/metrics?sslmode=require",
-  "customers": "postgresql://app_user:pass@customers-db.example.com:5432/customers?sslmode=require",
-  "products": "postgresql://app_user:pass@products-db.example.com:5432/inventory?sslmode=require",
-  "default": "customers"
-}
-```
 
 ## Development
 
