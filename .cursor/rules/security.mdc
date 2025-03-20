@@ -1,0 +1,115 @@
+---
+description: Security standards for all MCP servers
+globs: ["**/*.{js,ts,py,go,rs}"]
+alwaysApply: true
+---
+
+# MCP Server Security Standards
+
+## Credential Management
+
+1. **Environment Variables**
+   - Store all credentials in environment variables
+   - Never hardcode credentials in source code
+   - Use dedicated variables for different authentication purposes
+   - Example: `PG_DB_MAP` for PostgreSQL connections, `OBSIDIAN_API_KEY` for Obsidian vault
+
+2. **Secret Handling**
+   - Do not log sensitive information
+   - Mask credentials in error messages
+   - Do not include credentials in stack traces
+   - Use dedicated secret management for production environments
+
+3. **Default Values**
+   - Never use default credentials
+   - Implement strong password requirements
+   - Require explicit configuration for security-related settings
+   - Document all security-related configuration options
+
+## Input Validation
+
+1. **User Input**
+   - Validate all user input
+   - Use whitelisting approaches for validation
+   - Implement strict type checking
+   - Sanitize data before use in operations
+
+2. **Query Parameters**
+   - Validate structure and types of all query parameters
+   - Implement size limits for inputs
+   - Prevent injection attacks (SQL, NoSQL, Command)
+   - Use parameterized queries for database operations
+
+3. **File Operations**
+   - Validate file paths to prevent directory traversal
+   - Implement file type validation for uploads
+   - Set size limits for file operations
+   - Use secure temporary files when needed
+
+## Authentication & Authorization
+
+1. **Authentication Mechanisms**
+   - Implement secure token validation
+   - Apply proper cryptographic methods
+   - Support authentication timeouts
+   - Log authentication failures
+
+2. **Authorization Controls**
+   - Implement principle of least privilege
+   - Validate permissions for all operations
+   - Check authorization on both client and server sides
+   - Document required permissions for each operation
+
+3. **Session Management**
+   - Implement secure session handling
+   - Apply session timeouts
+   - Protect against session fixation
+   - Allow session revocation
+
+## Network Security
+
+1. **TLS/SSL**
+   - Require TLS for all connections
+   - Implement proper certificate validation
+   - Support secure cipher suites
+   - Reject insecure connections
+
+2. **API Security**
+   - Implement rate limiting
+   - Use API keys or tokens for authentication
+   - Validate request origins
+   - Set proper CORS policies
+
+3. **Error Handling**
+   - Do not expose sensitive information in errors
+   - Log security events
+   - Implement proper error responses
+   - Return generic errors to clients
+
+## Dependency Management
+
+1. **Dependency Updates**
+   - Regularly update dependencies
+   - Monitor for security vulnerabilities
+   - Implement automated security scanning
+   - Document dependency update process
+
+2. **Minimizing Risk**
+   - Use minimal set of dependencies
+   - Validate dependency sources
+   - Pin dependency versions
+   - Review dependency license compliance
+
+## Security Testing
+
+1. **Code Review**
+   - Perform security-focused code reviews
+   - Use static analysis tools
+   - Check for common vulnerabilities
+   - Validate security controls
+
+2. **Security Testing**
+   - Implement security test cases
+   - Test authentication and authorization flows
+   - Validate input validation mechanisms
+   - Test error handling for security events

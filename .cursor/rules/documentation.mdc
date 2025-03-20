@@ -1,0 +1,109 @@
+---
+description: Documentation standards for all MCP servers
+globs: ["**/README.md", "**/docs/**"]
+alwaysApply: true
+---
+
+# MCP Server Documentation Standards
+
+## Documentation Structure
+
+Each MCP server project must maintain the following documentation structure:
+
+```
+server-name/
+├── README.md         # Main server documentation
+└── docs/             # Detailed documentation
+    ├── USAGE.md      # Usage guide with examples
+    ├── TECHNICAL.md  # Technical specifications
+    ├── DEVELOPMENT.md # Development guidelines
+    └── INDEX.md      # Documentation index
+```
+
+## README.md Requirements
+
+The main README.md file must include:
+
+1. **Project Overview**
+   - Clear description of the server's purpose
+   - List of key features and capabilities
+
+2. **Installation Instructions**
+   - Prerequisites
+   - Step-by-step installation process
+   - Configuration options
+
+3. **Basic Usage**
+   - Quick start examples
+   - Common use cases
+   - Tool references
+
+4. **Security Considerations**
+   - Security best practices
+   - Authentication requirements
+   - Data handling guidelines
+
+5. **License Information**
+   - License type
+   - Copyright information
+   - Attribution requirements
+
+## Technical Documentation Requirements
+
+The technical documentation must include:
+
+1. **API Reference**
+   - All available tools and functions
+   - Input/output schemas
+   - Error responses
+   - Example usage
+
+2. **Architecture Overview**
+   - Component diagrams
+   - Data flow descriptions
+   - Integration points
+   - Design patterns used
+
+3. **Implementation Details**
+   - Dependencies
+   - Environment requirements
+   - Performance considerations
+   - Limitations
+
+## Style Guidelines
+
+1. **Markdown Formatting**
+   - Use ATX-style headers (`#` for titles)
+   - Use fenced code blocks with language specification
+   - Use tables for structured data
+   - Use lists for steps and features
+
+2. **Code Examples**
+   - Include language specification in code blocks
+   - Use realistic examples
+   - Include both input and expected output
+   - Explain non-obvious code portions
+
+3. **Clarity and Structure**
+   - Use clear, concise language
+   - Organize content with logical headings
+   - Include navigation links between related sections
+   - Define technical terms when first used
+
+## Maintenance Requirements
+
+1. **Version Synchronization**
+   - Documentation version must match software version
+   - Examples must work with current version
+   - Deprecated features must be clearly marked
+
+2. **Update Process**
+   - Update documentation with each code change
+   - Review documentation for accuracy after updates
+   - Test all examples before committing changes
+
+3. **Changelog Management**
+   - Maintain a detailed CHANGELOG.md
+   - Document all significant changes
+   - Include date and version for each change
+   - Link issues and pull requests

@@ -1,0 +1,104 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+
+# PostgreSQL MCP Server Rules
+
+## Directory Structure
+
+The actual PostgreSQL MCP directory structure is:
+
+```
+postgresql-mcp/
+├── .git/               # Git repository data
+├── build/              # Compiled JavaScript code
+├── docs/               # Documentation files
+│   ├── DEVELOPMENT.md  # Development guidelines
+│   ├── INDEX.md        # Documentation index
+│   ├── TECHNICAL.md    # Technical specifications
+│   └── USAGE.md        # Usage documentation
+├── node_modules/       # Node.js dependencies
+├── src/                # Source code
+│   ├── index.ts        # Main entry point
+│   ├── tools/          # Tool implementations
+│   │   ├── connections.ts  # Database connection management
+│   │   └── ...         # Other tool files
+│   └── utils/          # Utility functions
+│       ├── config.ts   # Configuration management
+│       ├── connection.ts # Database connection utilities
+│       └── ...         # Other utility files
+├── .gitignore          # Git ignore file
+├── LICENSE             # License file
+├── README.md           # Main documentation
+├── package-lock.json   # NPM dependencies lock file
+├── package.json        # NPM package configuration
+├── test-client.js      # Test client for manual testing
+└── tsconfig.json       # TypeScript configuration
+```
+
+## Configuration Standards
+
+1. **Environment Variables**
+   - Use `PG_DB_MAP` for database connection configuration
+   - Format as JSON string with the structure:
+     ```json
+     {
+       "connection1": "postgresql://user:pass@host:port/db",
+       "connection2": "postgresql://user:pass@host:port/db",
+       "default": "connection1"
+     }
+     ```
+   - Never hardcode credentials in source code
+
+2. **Connection Management**
+   - Use the `config.ts` utility for parsing environment variables
+   - Maintain compatibility with both direct connection strings and named connections
+   - Apply proper error handling for connection failures
+
+## Documentation Requirements
+
+1. **README.md Updates**
+   - All feature changes must be reflected in the README.md
+   - Examples must be kept up-to-date with actual implementation
+   - Include security considerations for all database operations
+
+2. **API Documentation**
+   - Each tool must be documented with input/output schemas
+   - Examples must be provided for each parameter
+   - Error handling must be documented
+
+3. **Technical Documentation**
+   - Architecture changes must be updated in TECHNICAL.md
+   - Performance considerations must be documented
+   - Security implications must be addressed
+
+## Code Quality Standards
+
+1. **TypeScript Practices**
+   - Use strong typing for all functions and variables
+   - Document public APIs with JSDoc comments
+   - Maintain a clear separation of concerns between modules
+
+2. **Error Handling**
+   - Implement comprehensive error handling
+   - Provide user-friendly error messages
+   - Log detailed error information for debugging
+
+3. **Testing**
+   - Write unit tests for utility functions
+   - Implement integration tests for database operations
+   - Test error handling paths
+
+## Security Practices
+
+1. **Connection Security**
+   - Support SSL/TLS connections with proper certificate validation
+   - Implement connection timeouts
+   - Use connection pooling for resource management
+
+2. **Query Security**
+   - Validate all SQL queries
+   - Prevent SQL injection attacks
+   - Implement query timeouts

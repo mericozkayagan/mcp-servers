@@ -1,0 +1,3 @@
+# Ignore database configuration file with sensitive credentials
+db-config.json
+meric-ozkayagan/mcp-servers/db-config.json

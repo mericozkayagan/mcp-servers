@@ -1,0 +1,110 @@
+---
+description: Rules for Obsidian MCP server development and documentation
+globs: ["obsidian-mcp/**"]
+alwaysApply: true
+---
+
+# Obsidian MCP Server Rules
+
+## Directory Structure
+
+The actual Obsidian MCP directory structure is:
+
+```
+obsidian-mcp/
+├── bin/                # Executable scripts
+├── docs/               # Documentation files
+│   ├── DEVELOPMENT.md  # Development guidelines
+│   ├── SETUP.md        # Setup instructions
+│   └── USAGE.md        # Usage documentation
+├── src/                # Source code
+│   ├── __init__.py     # Python package initializer
+│   ├── main.py         # Main entry point
+│   ├── api/            # API implementation
+│   │   ├── routes.py   # API endpoints
+│   │   └── models.py   # Data models
+│   ├── vault/          # Vault management
+│   │   ├── parser.py   # Markdown parser
+│   │   └── query.py    # Query engine
+│   └── utils/          # Utility functions
+│       ├── config.py   # Configuration utilities
+│       └── logging.py  # Logging utilities
+├── tests/              # Test suite
+│   ├── test_api.py     # API tests
+│   └── test_vault.py   # Vault tests
+├── .gitignore          # Git ignore file
+├── LICENSE             # License file
+├── README.md           # Main documentation
+├── pyproject.toml      # Python project configuration
+└── requirements.txt    # Python dependencies
+```
+
+## Configuration Standards
+
+1. **Environment Variables**
+   - Use `OBSIDIAN_API_KEY` for vault API authentication
+   - Use `OBSIDIAN_VAULT_PATH` for vault location configuration
+   - Store sensitive tokens securely, never in source code
+
+2. **Vault Access**
+   - Implement proper error handling for vault access failures
+   - Support relative and absolute paths for vault locations
+   - Implement file system permissions checks
+
+## Documentation Requirements
+
+1. **README.md Updates**
+   - All feature changes must be reflected in the README.md
+   - Include clear setup instructions for different platforms
+   - Document all environment variables and configuration options
+
+2. **API Documentation**
+   - Each API endpoint must be documented with request/response formats
+   - Include examples for common use cases
+   - Document error responses and status codes
+
+3. **Markdown Support**
+   - Document supported Markdown syntax features
+   - Include examples of query operations on Markdown content
+   - Document limitations of the parser
+
+## Code Quality Standards
+
+1. **Python Practices**
+   - Follow PEP 8 style guidelines
+   - Use type hints for all functions
+   - Document functions with docstrings
+
+2. **Error Handling**
+   - Use custom exception classes for different error types
+   - Provide user-friendly error messages
+   - Log detailed error information for debugging
+
+3. **Testing**
+   - Implement unit tests for all functionality
+   - Use fixtures for test data
+   - Test edge cases and error conditions
+
+## Security Practices
+
+1. **API Security**
+   - Validate API key on all requests
+   - Implement rate limiting
+   - Log access attempts
+
+2. **File System Security**
+   - Validate file paths to prevent directory traversal
+   - Implement proper file permissions
+   - Handle file system errors gracefully
+
+## Vault Operations
+
+1. **Query Implementation**
+   - Support both simple text search and complex queries
+   - Implement proper index management for performance
+   - Support different query types (text, tags, properties)
+
+2. **Content Modification**
+   - Validate content before writing to files
+   - Implement atomic write operations with backups
+   - Support both creation and modification operations
