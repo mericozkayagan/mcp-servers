@@ -1,3 +1,141 @@
-# Ignore database configuration file with sensitive credentials
+# Node.js / TypeScript specific
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+.npm
+.yarn-integrity
+
+# TypeScript
+*.tsbuildinfo
+
+# Build outputs
+# Note: build directory is currently committed in this project
+# but typically would be ignored
+# build/
+dist/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Cache files
+.cache/
+.npm/
+.eslintcache
+
+# Editor files
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+.DS_Store
+.history/
+
+# Database config files (already in root .gitignore)
 db-config.json
-meric-ozkayagan/mcp-servers/db-config.json
+**/db-config.json
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Temporary files
+*.tmp
+*.swp
+temp/
+tmp/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Distribution / packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.env
+.venv
+pythonenv*
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+pytest_report.xml
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Editor files
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+.DS_Store
+.history/
+
+# Logs
+logs/
+*.log
+
+# Obsidian-specific
+obsidian-vault-test/
+vault-config.json
+
+# Temporary files
+*.swp
+*.swo
+*~
+.DS_Store
+tmp/
+
+# Compiled Python binaries and libraries
+*.so
+*.dylib
+*.dll
