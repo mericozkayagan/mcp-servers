@@ -1,0 +1,134 @@
+{
+  "version": "0.1.0",
+  "name": "n8n-mcp-server",
+  "code": {
+    "entrypoint": "build/index.js"
+  },
+  "spec": {
+    "type": "tool_provider",
+    "toolSpec": {
+      "versions": {
+        "0.1.0": {
+          "name": "n8n-mcp",
+          "tools": [
+            {
+              "name": "mcp_list_workflows",
+              "description": "List all workflows in the n8n instance",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "random_string": {
+                    "type": "string",
+                    "description": "Dummy parameter for no-parameter tools"
+                  }
+                },
+                "required": ["random_string"]
+              }
+            },
+            {
+              "name": "mcp_get_workflow",
+              "description": "Get details of a specific workflow by ID",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "ID of the workflow to retrieve"
+                  }
+                },
+                "required": ["id"]
+              }
+            },
+            {
+              "name": "mcp_activate_workflow",
+              "description": "Activate a specific workflow by ID",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "ID of the workflow to activate"
+                  }
+                },
+                "required": ["id"]
+              }
+            },
+            {
+              "name": "mcp_deactivate_workflow",
+              "description": "Deactivate a specific workflow by ID",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "ID of the workflow to deactivate"
+                  }
+                },
+                "required": ["id"]
+              }
+            },
+            {
+              "name": "mcp_execute_workflow",
+              "description": "Execute a specific workflow with optional input data",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "ID of the workflow to execute"
+                  },
+                  "data": {
+                    "type": "object",
+                    "description": "Input data for the workflow execution"
+                  }
+                },
+                "required": ["id"]
+              }
+            },
+            {
+              "name": "mcp_list_workflow_executions",
+              "description": "List all executions for a specific workflow",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "ID of the workflow to get executions for"
+                  }
+                },
+                "required": ["id"]
+              }
+            },
+            {
+              "name": "mcp_get_execution",
+              "description": "Get details of a specific execution by ID",
+              "inputSchema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "ID of the execution to retrieve"
+                  }
+                },
+                "required": ["id"]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "environment": {
+    "variables": {
+      "N8N_BASE_URL": {
+        "description": "Base URL of the n8n instance (e.g., http://localhost:5678)",
+        "required": true
+      },
+      "N8N_API_KEY": {
+        "description": "API key for the n8n instance",
+        "required": true,
+        "secret": true
+      }
+    }
+  }
+}

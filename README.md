@@ -58,6 +58,34 @@ A server that enables AI interaction with Obsidian.md notes and vaults through t
 - "Create a new note called 'Meeting Summary' with a summary of the latest project meeting"
 - "Add today's tasks to my 'Daily Notes' file under the heading 'Tasks'"
 
+### 3. n8n MCP Server
+
+A server that provides integration with n8n instances via the n8n API, enabling workflow management and execution directly from Cursor AI. Built with the MCP SDK for standardized communication.
+
+- **Location**: `./n8n-mcp/`
+- **Features**: List workflows, manage workflow state, execute workflows, view executions
+- **Requires**: n8n instance with API access
+- **Implementation**: Uses the Model Context Protocol SDK with Zod validation
+
+#### Main Tools
+
+- `mcp_list_workflows`: List all workflows in the n8n instance
+- `mcp_get_workflow`: Get details of a specific workflow by ID
+- `mcp_activate_workflow`: Activate a specific workflow by ID
+- `mcp_deactivate_workflow`: Deactivate a specific workflow by ID
+- `mcp_execute_workflow`: Execute a specific workflow with optional input data
+- `mcp_list_workflow_executions`: List executions for a specific workflow
+- `mcp_get_execution`: Get details of a specific execution by ID
+
+#### Usage Examples in Cursor AI
+
+- "List all workflows in my n8n instance"
+- "Show me the details of workflow X"
+- "Activate workflow Y so it starts listening for triggers"
+- "Execute workflow Z with this input data"
+- "Show me all recent executions of workflow X"
+- "Get the execution details for run ABC"
+
 ## Setup Instructions
 
 ### Prerequisites
@@ -66,6 +94,7 @@ A server that enables AI interaction with Obsidian.md notes and vaults through t
 - Python 3.11 or higher with pip
 - Obsidian.md with Local REST API plugin installed (for Obsidian integration)
 - PostgreSQL database (for PostgreSQL integration)
+- n8n instance with API access (for n8n integration)
 
 ### PostgreSQL Server Setup
 
@@ -106,6 +135,30 @@ A server that enables AI interaction with Obsidian.md notes and vaults through t
 
 4. Set your API key in `.env` file or in the MCP configuration
 
+### n8n Server Setup
+
+1. Set up an n8n instance and create an API key:
+
+   - Log in to your n8n instance
+   - Go to Settings → API
+   - Create a new API key with appropriate permissions
+   - Copy the API key
+
+2. Navigate to the n8n MCP directory:
+
+   ```bash
+   cd n8n-mcp
+   ```
+
+3. Install dependencies and build:
+
+   ```bash
+   npm install
+   npm run build
+   ```
+
+4. Set your n8n URL and API key in `.env` file or in the MCP configuration
+
 ### Configuration for Cursor AI
 
 Edit your Cursor AI MCP configuration file at `~/.cursor/mcp.json`:
@@ -126,12 +179,20 @@ Edit your Cursor AI MCP configuration file at `~/.cursor/mcp.json`:
       "env": {
         "OBSIDIAN_API_KEY": "your_api_key_here"
       }
+    },
+    "n8n-mcp": {
+      "command": "node",
+      "args": ["/path/to/mcp-servers/n8n-mcp/build/index.js"],
+      "env": {
+        "N8N_BASE_URL": "https://your-n8n-instance.example.com",
+        "N8N_API_KEY": "your_api_key_here"
+      }
     }
   }
 }
 ```
 
-Replace paths, database connection details, and API key with your actual values. The `PG_DB_MAP` environment variable lets you configure multiple database connections and reference them by name.
+Replace paths, connection details, and API keys with your actual values.
 
 ## Debugging
 
@@ -139,6 +200,7 @@ Replace paths, database connection details, and API key with your actual values.
 
 - PostgreSQL MCP logs: `~/Library/Logs/Cursor/mcp-server-postgresql-mcp.log`
 - Obsidian MCP logs: `~/Library/Logs/Cursor/mcp-server-mcp-obsidian.log`
+- n8n MCP logs: `~/Library/Logs/Cursor/mcp-server-n8n-mcp.log`
 
 ### Using MCP Inspector
 
@@ -154,8 +216,15 @@ For Obsidian:
 npx @modelcontextprotocol/inspector /path/to/python/bin/mcp-obsidian
 ```
 
+For n8n:
+
+```bash
+npx @modelcontextprotocol/inspector node /path/to/n8n-mcp/build/index.js
+```
+
 ## Security Considerations
 
 - PostgreSQL connection strings contain sensitive credentials - use environment variables when possible
 - The Obsidian MCP server has read/write access to your notes - review permissions carefully
-- Both servers run locally on your machine and don't expose services to the network by default
+- The n8n API key provides access to your workflows - use an API key with appropriate permissions
+- All servers run locally on your machine and don't expose services to the network by default
