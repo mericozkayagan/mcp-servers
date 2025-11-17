@@ -1,0 +1,37 @@
+{
+  "name": "gemini-image-mcp-server",
+  "version": "0.1.0",
+  "description": "MCP Server for Google Gemini 2.5 Flash Image Generation",
+  "main": "build/index.js",
+  "type": "module",
+  "scripts": {
+    "clean": "rm -rf build",
+    "build": "npm run clean && tsc && node -e \"process.platform !== 'win32' && require('child_process').execSync('chmod +x build/index.js')\"",
+    "start": "node build/index.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+  },
+  "keywords": [
+    "gemini",
+    "image-generation",
+    "ai",
+    "mcp",
+    "claude",
+    "google"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "latest",
+    "@google/genai": "latest",
+    "mime": "^4.0.1",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
+

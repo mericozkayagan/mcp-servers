@@ -86,6 +86,41 @@ A server that provides integration with n8n instances via the n8n API, enabling 
 - "Show me all recent executions of workflow X"
 - "Get the execution details for run ABC"
 
+### 4. Gemini Image MCP Server
+
+A server that provides AI image generation capabilities using Google's Gemini 2.5 Flash Image model. Generate high-quality images directly from text descriptions with full control over size, output location, and generation parameters.
+
+- **Location**: `./gemini-image-mcp/`
+- **Features**: Text-to-image generation, multiple sizes, customizable output, streaming support
+- **Requires**: Google Gemini API key
+- **Implementation**: Built with MCP SDK, fully configurable parameters
+
+#### Main Tools
+
+- `generate_image`: Generate images from text prompts with customizable parameters
+  - Supports multiple image sizes (256px, 512px, 1K, 2K, 4K)
+  - Configurable output directory and file naming
+  - Optional AI text descriptions of generated images
+  - Automatic file management and validation
+
+#### Usage Examples in Cursor AI
+
+- "Generate an image of a sunset over the ocean"
+- "Generate a 4K image of a futuristic city with flying cars"
+- "Generate an image of a cute robot, save it to ./my-images/"
+- "Generate a 2K image of a fantasy castle on a floating island, name it castle_concept.png"
+- "Generate an image of a modern minimalist coffee maker, product photography style"
+
+#### Configuration
+
+All settings are highly configurable in `src/config.ts`:
+- Image sizes and default size
+- Output directory and file naming patterns
+- Model selection and response modalities
+- Request timeouts and concurrency limits
+- Validation rules and security settings
+- Logging and debug options
+
 ## Setup Instructions
 
 ### Prerequisites
@@ -95,6 +130,7 @@ A server that provides integration with n8n instances via the n8n API, enabling 
 - Obsidian.md with Local REST API plugin installed (for Obsidian integration)
 - PostgreSQL database (for PostgreSQL integration)
 - n8n instance with API access (for n8n integration)
+- Google Gemini API key (for Gemini Image integration)
 
 ### PostgreSQL Server Setup
 
@@ -159,6 +195,34 @@ A server that provides integration with n8n instances via the n8n API, enabling 
 
 4. Set your n8n URL and API key in `.env` file or in the MCP configuration
 
+### Gemini Image Server Setup
+
+1. Get a Google Gemini API key:
+
+   - Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
+   - Create or sign in to your Google account
+   - Generate an API key
+
+2. Navigate to the Gemini Image MCP directory:
+
+   ```bash
+   cd gemini-image-mcp
+   ```
+
+3. Install dependencies and build:
+
+   ```bash
+   npm install
+   npm run build
+   ```
+
+4. The server will be built to `build/index.js`
+
+5. (Optional) Customize configuration:
+
+   - Edit `src/config.ts` to adjust image sizes, output paths, or other settings
+   - Run `npm run build` again after making changes
+
 ### Configuration for Cursor AI
 
 Edit your Cursor AI MCP configuration file at `~/.cursor/mcp.json`:
@@ -187,6 +251,13 @@ Edit your Cursor AI MCP configuration file at `~/.cursor/mcp.json`:
         "N8N_BASE_URL": "https://your-n8n-instance.example.com",
         "N8N_API_KEY": "your_api_key_here"
       }
+    },
+    "gemini-image-mcp": {
+      "command": "node",
+      "args": ["/path/to/mcp-servers/gemini-image-mcp/build/index.js"],
+      "env": {
+        "GEMINI_API_KEY": "your_gemini_api_key_here"
+      }
     }
   }
 }
@@ -201,6 +272,7 @@ Replace paths, connection details, and API keys with your actual values.
 - PostgreSQL MCP logs: `~/Library/Logs/Cursor/mcp-server-postgresql-mcp.log`
 - Obsidian MCP logs: `~/Library/Logs/Cursor/mcp-server-mcp-obsidian.log`
 - n8n MCP logs: `~/Library/Logs/Cursor/mcp-server-n8n-mcp.log`
+- Gemini Image MCP logs: `~/Library/Logs/Cursor/mcp-server-gemini-image-mcp.log`
 
 ### Using MCP Inspector
 
@@ -222,9 +294,19 @@ For n8n:
 npx @modelcontextprotocol/inspector node /path/to/n8n-mcp/build/index.js
 ```
 
+For Gemini Image:
+
+```bash
+npx @modelcontextprotocol/inspector node /path/to/gemini-image-mcp/build/index.js
+```
+
+Make sure to set the `GEMINI_API_KEY` environment variable before running the inspector.
+
 ## Security Considerations
 
 - PostgreSQL connection strings contain sensitive credentials - use environment variables when possible
 - The Obsidian MCP server has read/write access to your notes - review permissions carefully
 - The n8n API key provides access to your workflows - use an API key with appropriate permissions
+- The Gemini API key provides access to Google's image generation service - never commit it to version control
+- The Gemini server validates output paths to prevent directory traversal attacks
 - All servers run locally on your machine and don't expose services to the network by default
